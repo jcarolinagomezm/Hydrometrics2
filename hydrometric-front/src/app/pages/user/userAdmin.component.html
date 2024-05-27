@@ -1,0 +1,91 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>USUARIOS</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                    <li class="breadcrumb-item active">Usuarios</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <button type="button" class="btn btn-dark" (click)="openModalNew()">
+            Nuevo Usuario
+        </button>
+        <div class="table-responsive">
+            <table class="table mt-4">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            Nombres
+                        </th>
+                        <th>
+                            Apellidos
+                        </th>
+                        <th>
+                            email
+                        </th>
+                        <th>
+                            Usuario
+                        </th>
+                        <th>
+                            Rol
+                        </th>
+                        <th>
+                            Estado
+                        </th>
+                        <th>
+                            Opciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of dataUser | paginate: { itemsPerPage: 10, currentPage: p }">
+                        <td class="col-1">
+                            {{data.id}}
+                        </td>
+                        <td class="col-3">
+                            {{data.firstName}}
+                        </td>
+                        <td class="col-3">
+                            {{data.lastName}}
+                        </td>
+                        <td class="col-3">
+                            {{data.email}}
+                        </td>
+                        <td class="col-3">
+                            {{data.username}}
+                        </td>
+                        <td class="col-3">
+                            {{data.role}}
+                        </td>
+                        <td class="col-3">
+                            {{data.enabled == true ? "Activo" : "Inactivo" }}
+                        </td>
+                        <td class="col-3">
+                            <button type="button" class="btn btn-dark" (click)="openModal(data)">
+                                Editar
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-12">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+    </div>
+</section>

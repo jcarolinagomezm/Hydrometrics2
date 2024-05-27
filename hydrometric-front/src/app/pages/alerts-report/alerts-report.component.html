@@ -1,0 +1,135 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">REPORTES</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+          <li class="breadcrumb-item active">Reportes</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="card" style="max-width: 80vh;">
+      <div class="card-header">
+        <h3>Estación</h3>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="dataForm" (ngSubmit)="loadData()" class="row">
+          <div class="col-12">
+            <label>Estación:</label>
+            <select class="form-control" formControlName="stationId" required>
+              <option *ngFor="let data of dataStation" value="{{data.id}}">{{data.name}}</option>
+            </select>
+            <div
+              *ngIf="dataForm.get('stationId').invalid && (dataForm.get('stationId').dirty || dataForm.get('stationId').touched)">
+              <span *ngIf="dataForm.get('stationId').errors.required" class="text-danger">El valor es
+                obligatorio.</span>
+            </div>
+          </div>
+          <div class="col-12 mt-3">
+            <div class="input-group">
+              <label>Fecha Inicio:</label>
+              <input [matDatepicker]="pickerStart" formControlName="startDate" class="form-control" required>
+              <mat-datepicker-toggle matIconSuffix [for]="pickerStart"></mat-datepicker-toggle>
+              <mat-datepicker #pickerStart></mat-datepicker>
+            </div>
+            <div class="input-group">
+              <label class="mr-3">Fecha Fin:</label>
+              <input matInput [matDatepicker]="pickerEnd" formControlName="endDate" type="datetime" class="form-control"
+                required>
+              <mat-datepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+              <mat-datepicker #pickerEnd></mat-datepicker>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center col-12 mt-3">
+            <button type="submit" class="btn btn-dark ml-3" style="height: 40px;">Enviar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="table-responsive" id="tablaDatos">
+      <table class="table">
+        <thead>
+          <th>
+            Estación
+          </th>
+          <th>
+            Fecha 
+          </th>
+          <th>
+            Precipitación
+          </th>
+          <th>
+            Humedad Relativa
+          </th>
+          <th>
+            Radiación Solar
+          </th>
+          <th>
+            Temperatura
+          </th>
+          <th>
+            Dirección del Viento
+          </th>
+          <th>
+            Velocidad del Viento
+          </th>
+          <th>
+            Fecha de Auditoria
+          </th>
+          <th>
+            Fecha de Modificación
+          </th>
+          <th>
+            Usuario
+          </th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let dat of data">
+            <td>
+              {{dat.station_name}} °
+            </td>
+            <td>
+              {{dat.date_time}} 
+            </td>
+            <td>
+              {{dat.precipitation}} mm
+            </td>
+            <td>
+              {{dat.relative_humidity}} %
+            </td>
+            <td>
+              {{dat.solar_radiation}} W/m²
+            </td>
+            <td>
+              {{dat.temperature}} °
+            </td>
+            <td>
+              {{dat.wind_direction}} °
+            </td>
+            <td>
+              {{dat.wind_speed}} m/s
+            </td>
+            <td>
+              {{dat.creation_date}}
+            </td>
+            <td>
+              {{dat.modification_date}}
+            </td>
+            <td>
+              {{dat.modification_by_user}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

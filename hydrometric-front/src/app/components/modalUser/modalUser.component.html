@@ -1,0 +1,79 @@
+<div>
+    <div class="p-4">
+        <div class="d-flex justify-content-center">
+            <h1 mat-dialog-title *ngIf="data != null">{{data.firstName + ' '+data.lastName}}</h1>
+            <h1 mat-dialog-title *ngIf="data == null">Nuevo Usuario</h1>
+        </div>
+        <hr>
+        <div mat-dialog-content>
+            <form [formGroup]="userForm" class="row">
+                <div hidden>
+                    <input formControlName="id" type="text" class="form-control"/>
+                </div>
+                <div>
+                    <label>Nombres:</label>
+                    <input formControlName="firstName" type="text" class="form-control" required/>
+                    <div *ngIf="userForm.get('firstName').invalid && (userForm.get('firstName').dirty || userForm.get('firstName').touched)">
+                        <span *ngIf="userForm.get('firstName').errors.required" class="text-danger">El valor es obligatorio.</span>
+                    </div>
+                </div>
+                <div>
+                    <label>Apellidos:</label>
+                    <input formControlName="lastName" type="text" class="form-control" required/>
+                    <div *ngIf="userForm.get('lastName').invalid && (userForm.get('lastName').dirty || userForm.get('lastName').touched)">
+                        <span *ngIf="userForm.get('lastName').errors.required" class="text-danger">El valor es obligatorio.</span>
+                    </div>
+                </div>
+                <div class="mt-4 col-12">
+                    <label>Correo Eléctronico:</label>
+                    <input formControlName="email" type="email" class="form-control" required/>
+                    <div *ngIf="userForm.get('email').invalid && (userForm.get('email').dirty || userForm.get('email').touched)">
+                        <span *ngIf="userForm.get('email').errors.required" class="text-danger">El valor es obligatorio.</span>
+                    </div>
+                </div>
+                <div *ngIf="data == null" class="col-12 mt-4 row">
+                    <div class="col-6">
+                        <label>Usuario:</label>
+                        <input formControlName="username" type="text" class="form-control" required/>
+                        <div *ngIf="userForm.get('username').invalid && (userForm.get('username').dirty || userForm.get('username').touched)">
+                            <span *ngIf="userForm.get('username').errors.required" class="text-danger">El valor es obligatorio.</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label>Contraseña:</label>
+                        <input formControlName="password" type="password" class="form-control"/>
+                        <div *ngIf="userForm.get('password').invalid && (userForm.get('password').dirty || userForm.get('password').touched)">
+                            <span *ngIf="userForm.get('password').errors.required" class="text-danger">El valor es obligatorio.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 mt-3">
+                    <label>Rol:</label>                    
+                    <select class="form-control" formControlName="role" required>
+                        <option value="ADMIN">ADMIN</option>
+                        <option value="AUDITOR">AUDITOR</option>
+                        <option value="USER">USER</option>
+                    </select>
+                    <div *ngIf="userForm.get('role').invalid && (userForm.get('role').dirty || userForm.get('role').touched)">
+                        <span *ngIf="userForm.get('role').errors.required" class="text-danger">El valor es obligatorio.</span>
+                    </div>
+                </div>
+                <div class="col-6 mt-3">
+                    <label>Estado:</label>
+                    <select class="form-control" formControlName="enabled" required>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                    <div *ngIf="userForm.get('enabled').invalid && (userForm.get('enabled').dirty || userForm.get('enabled').touched)">
+                        <span *ngIf="userForm.get('enabled').errors.required" class="text-danger">El estado es obligatorio.</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <hr>
+        <div mat-dialog-actions class="d-flex justify-content-center mt-5">
+            <button type="button" class="btn btn-dark" (click)="cancelar(false)">Cancelar</button>
+            <button type="button" class="btn btn-danger ml-4" (click)="saveUser()">Guardar</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<pf-dropdown [hideArrow]="true" class="user-menu">
+    <div slot="head">
+        <a class="nav-link">
+            <pf-image src="assets/img/default-profile.png" fallbackSrc="assets/img/default-profile.png"
+                class="user-image-small" width="25" height="25" alt="User Image" rounded="true" />
+        </a>
+    </div>
+    <div slot="body">
+        <li class="user-header bg-primary">
+            <pf-image src="assets/img/default-profile.png" fallbackSrc="assets/img/default-profile.png"
+                class="user-image-big" alt="User Image" width="90" height="90" rounded="true" />
+
+            <p>
+                <span class="h4">{{ user.firstName +' '+ user.lastName}}</span> 
+            </p>
+        </li>
+        <li class="user-footer d-flex justify-content-center">
+            <a (click)="logout()" class="btn btn-default btn-flat float-right">
+                Sign out
+            </a>
+        </li>
+    </div>
+</pf-dropdown>

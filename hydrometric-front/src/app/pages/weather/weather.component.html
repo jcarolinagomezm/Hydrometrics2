@@ -1,0 +1,68 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Datos Estaciones</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                    <li class="breadcrumb-item active">Datos Estaciones</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-center">
+            <div class="card tamano">
+                <div class="card-header">
+                    <h3>Estación</h3>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="stationForm"  (ngSubmit)="loadDataWeather()" class="row">
+                        <div class="col-12">              
+                            <select class="form-control" formControlName="codigo"  required>
+                                <option *ngFor="let data of dataStation" value="{{data.id}}">{{data.name}}</option>
+                            </select>
+                            <div *ngIf="stationForm.get('codigo').invalid && (stationForm.get('codigo').dirty || stationForm.get('codigo').touched)">
+                                <span *ngIf="stationForm.get('codigo').errors.required" class="text-danger">El valor es obligatorio.</span>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-3">
+                            <div class="input-group">
+                              <label>Fecha Inicio:</label>
+                              <input [matDatepicker]="pickerStart" formControlName="dateStart" class="form-control" required>
+                              <mat-datepicker-toggle matIconSuffix [for]="pickerStart"></mat-datepicker-toggle>
+                              <mat-datepicker #pickerStart></mat-datepicker>
+                            </div>
+                            <div class="input-group">
+                              <label class="mr-3">Fecha Fin:</label>
+                              <input matInput [matDatepicker]="pickerEnd" formControlName="dateEnd" type="datetime" class="form-control"
+                                required>
+                              <mat-datepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+                              <mat-datepicker #pickerEnd></mat-datepicker>
+                            </div>
+                          </div>
+                        <button type="submit" class="btn btn-dark ml-3" style="height: 40px;">Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card col-12">
+            <div class="card-header text-center">
+                <h3>{{nameStation}}</h3>
+            </div>
+            <div class="card-body row">
+                <canvas id="myChart0" class="mt-5 canvas"></canvas>
+                <canvas id="myChart1" class="mt-5 canvas"></canvas>
+                <canvas id="myChart2" class="mt-5 canvas"></canvas>
+                <canvas id="myChart3" class="mt-5 canvas"></canvas>
+                <canvas id="myChart4" class="mt-5 canvas"></canvas>
+                <canvas id="myChart5" class="mt-5 canvas"></canvas>
+            </div>
+        </div>
+    </div>
+</section>

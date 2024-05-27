@@ -1,0 +1,82 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">REPORTES USUARIOS</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+          <li class="breadcrumb-item active">Reportes</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="content">
+  <div class="container-fluid">
+    <button type="button" class="btn btn-dark" (click)="generarPDF()">
+      generar PDF
+    </button>
+    <div id="tablaDatos" class="table-responsive col-12">
+      <table class="table mt-5 ml-5">
+        <thead>
+          <th>
+            Nombres
+          </th>
+          <th>
+            Apellidos
+          </th>
+          <th>
+            Email
+          </th>
+          <th>
+            Usuario
+          </th>
+          <th>
+            Rol
+          </th>
+          <th>
+            Estado
+          </th>
+          <th>
+            Fecha Creación
+          </th>
+          <th>
+            Fecha Modificación
+          </th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let dat of data">
+            <td>
+              {{dat.first_name}}
+            </td>
+            <td>
+              {{dat.last_name}}
+            </td>
+            <td>
+              {{dat.email}}
+            </td>
+            <td>
+              {{dat.username}}
+            </td>
+            <td>
+              {{dat.role}}
+            </td>
+            <td>
+              {{dat.enabled == 1 ? "Activo" : "Inactivo"}}
+            </td>
+            <td>
+              {{dat.creation_date}}
+            </td>
+            <td>
+              {{dat.modification_date}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>

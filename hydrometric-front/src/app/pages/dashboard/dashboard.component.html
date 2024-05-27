@@ -1,0 +1,77 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">INICIO</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-6" *ngIf="user.role == 'ADMIN' || user.rola == 'AUDITOR' || user.role == 'USER'">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>653</h3>
+                        <p>Informacion estaciones</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <a [routerLink]="['/dataEstaciones']" class="small-box-footer"
+                        >Mas Información <i class="fas fa-arrow-circle-right"></i
+                    ></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6" *ngIf="user.role == 'ADMIN' || user.role == 'AUDITOR'">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>15</h3>
+                        <p>Reportes Generados</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a [routerLink]="['/reportes']" class="small-box-footer"
+                        >Mas Información <i class="fas fa-arrow-circle-right"></i
+                    ></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6" *ngIf="user.role == 'ADMIN' || user.role == 'USER' || user.role == 'AUDITOR'">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>3</h3>
+                        <p>Usuarios Registrados</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a [routerLink]="['/reportes']" class="small-box-footer"
+                        >Mas Información <i class="fas fa-arrow-circle-right"></i
+                    ></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6" *ngIf="user.role == 'ADMIN' || user.role == 'AUDITOR'">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>178</h3>
+                        <p>Alertas</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                    <a [routerLink]="['/alerts']" class="small-box-footer"
+                        >Mas Información <i class="fas fa-arrow-circle-right"></i
+                    ></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

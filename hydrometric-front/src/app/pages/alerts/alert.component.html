@@ -1,0 +1,70 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>ALERTAS</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                    <li class="breadcrumb-item active">Alertas</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content ">
+    <div class="container-fluid ">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            #
+                        </th>
+                        <th scope="col">
+                            Fecha Alerta
+                        </th>
+                        <th scope="col">
+                            Nombre Estación
+                        </th>
+                        <th scope="col">
+                            Variable Con error
+                        </th>
+                        <th scope="col">
+                            Opciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of dataWeather | paginate: { itemsPerPage: 10, currentPage: p }">
+                        <td class="col-1">
+                            {{data.alertId}}
+                        </td>
+                        <td class="col-3">
+                            {{data.weatherDataDTO.dateTime}}
+                        </td>
+                        <td class="col-3">
+                            {{data.weatherDataDTO.station.name}}
+                        </td>
+                        <td class="col-3">
+                            {{data.dataCamp}}
+                        </td>
+                        <td class="col-3">
+                            <button type="button" class="btn btn-dark" (click)="openModal(data)">
+                                Revisar
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+    </div>
+</section>

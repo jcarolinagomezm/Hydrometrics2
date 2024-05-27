@@ -1,0 +1,38 @@
+<div class="card card-outline card-primary">
+    <div class="card-header text-center">
+        <img src="./assets/img/meteodata.png" height="100px"alt="https://www.flaticon.es/icono-gratis/weather-forecast_9176568" alt="https://www.flaticon.es/icono-gratis/weather-forecast_9176568">
+        <br>
+        <a class="h1"><b>MeteoData</b></a>
+    </div>
+    <div class="card-body">
+        <p class="login-box-msg h3"><b>Inicio de Sesión</b></p>
+
+        <form [formGroup]="loginForm" (ngSubmit)="loginByAuth()">
+            <div class="input-group mb-3">
+                <input formControlName="username" type="text" class="form-control" placeholder="Usuario" />
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-user"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <input formControlName="password" type="password" class="form-control" placeholder="Password" />
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                    </div>
+                </div>
+            </div>
+            <p class="mb-1">
+                <a [routerLink]="['/recuperar-contraseña']">Olvidé mi contraseña</a>
+            </p>
+            <div class="d-flex justify-content-center mt-4">
+                <div class="col-5">
+                    <button class="btn-dark col-12 p-2" type="submit">Ingresar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- /.login-card-body -->
+</div>
