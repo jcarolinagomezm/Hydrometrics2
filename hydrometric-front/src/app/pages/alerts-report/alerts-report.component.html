@@ -16,43 +16,60 @@
 
 <section class="content">
   <div class="container-fluid">
-    <div class="card" style="max-width: 80vh;">
-      <div class="card-header">
-        <h3>Estación</h3>
+    <div class="d-flex justify-content-center">
+      <div class="card tamano">
+        <div class="card-header">
+          <h3>Estación</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="dataForm" (ngSubmit)="loadData()" class="row">
+            <div class="col-12">
+              <label>Estación:</label>
+              <select class="form-control" formControlName="stationId" required>
+                <option *ngFor="let data of dataStation" value="{{data.id}}">{{data.name}}</option>
+              </select>
+              <div
+                *ngIf="dataForm.get('stationId').invalid && (dataForm.get('stationId').dirty || dataForm.get('stationId').touched)">
+                <span *ngIf="dataForm.get('stationId').errors.required" class="text-danger">El valor es
+                  obligatorio.</span>
+              </div>
+            </div>
+            <div class="col-12 mt-3">
+              <mat-form-field class="col-12">
+                <mat-label>Fecha Inicio:</mat-label>
+                <input [matDatepicker]="pickerStart" [min]="minDateStart" [max]="maxDateStart" matInput
+                  formControlName="startDate" (dateChange)="ajustarRango($event)">
+                <mat-datepicker-toggle matIconSuffix [for]="pickerStart"></mat-datepicker-toggle>
+                <mat-datepicker #pickerStart disabled="false"></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="col-12">
+                <mat-label>Fecha Fin:</mat-label>
+                <input [matDatepicker]="pickerEnd" [min]="minDateEnd" [max]="maxDateEnd" matInput
+                  formControlName="endDate" required>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+                <mat-datepicker #pickerEnd></mat-datepicker>
+              </mat-form-field>
+              <!-- <div class="input-group">
+                <label>Fecha Inicio:</label>
+                <input [matDatepicker]="pickerStart" [min]="minDateStart" [max]="maxDateStart" formControlName="startDate" class="form-control" required>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerStart"></mat-datepicker-toggle>
+                <mat-datepicker #pickerStart></mat-datepicker>
+              </div> -->
+              <!-- <div class="input-group">
+                <label class="mr-3">Fecha Fin:</label>
+                <input matInput [matDatepicker]="pickerEnd" formControlName="endDate" type="datetime" class="form-control"
+                  required>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+                <mat-datepicker #pickerEnd></mat-datepicker>
+              </div> -->
+            </div>
+            <div class="d-flex justify-content-center col-12 mt-3">
+              <button type="submit" class="btn btn-dark ml-3" style="height: 40px;">Enviar</button>
+            </div>
+          </form>
+        </div>
       </div>
-      <div class="card-body">
-        <form [formGroup]="dataForm" (ngSubmit)="loadData()" class="row">
-          <div class="col-12">
-            <label>Estación:</label>
-            <select class="form-control" formControlName="stationId" required>
-              <option *ngFor="let data of dataStation" value="{{data.id}}">{{data.name}}</option>
-            </select>
-            <div
-              *ngIf="dataForm.get('stationId').invalid && (dataForm.get('stationId').dirty || dataForm.get('stationId').touched)">
-              <span *ngIf="dataForm.get('stationId').errors.required" class="text-danger">El valor es
-                obligatorio.</span>
-            </div>
-          </div>
-          <div class="col-12 mt-3">
-            <div class="input-group">
-              <label>Fecha Inicio:</label>
-              <input [matDatepicker]="pickerStart" formControlName="startDate" class="form-control" required>
-              <mat-datepicker-toggle matIconSuffix [for]="pickerStart"></mat-datepicker-toggle>
-              <mat-datepicker #pickerStart></mat-datepicker>
-            </div>
-            <div class="input-group">
-              <label class="mr-3">Fecha Fin:</label>
-              <input matInput [matDatepicker]="pickerEnd" formControlName="endDate" type="datetime" class="form-control"
-                required>
-              <mat-datepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datepicker-toggle>
-              <mat-datepicker #pickerEnd></mat-datepicker>
-            </div>
-          </div>
-          <div class="d-flex justify-content-center col-12 mt-3">
-            <button type="submit" class="btn btn-dark ml-3" style="height: 40px;">Enviar</button>
-          </div>
-        </form>
-      </div>
+
     </div>
 
     <div class="table-responsive" id="tablaDatos">
@@ -62,7 +79,7 @@
             Estación
           </th>
           <th>
-            Fecha 
+            Fecha
           </th>
           <th>
             Precipitación
@@ -98,7 +115,7 @@
               {{dat.station_name}} °
             </td>
             <td>
-              {{dat.date_time}} 
+              {{dat.date_time}}
             </td>
             <td>
               {{dat.precipitation}} mm
@@ -130,6 +147,9 @@
           </tr>
         </tbody>
       </table>
+    </div>
+    <div class="col-12">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
   </div>
 </section>

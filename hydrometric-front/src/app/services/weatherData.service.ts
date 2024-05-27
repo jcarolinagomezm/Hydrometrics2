@@ -28,8 +28,9 @@ export class WeatherDataService {
 
   loadDataWeather(formData){
     try {
-      let startDate = formData.dateStart.format('yyyy-MM-DD HH:mm:ss');
-      let endDate = formData.dateStart.format('yyyy-MM-DD HH:mm:ss');
+      let startDate = formData.dateStart.format('yyyy-MM-DD');
+      let endDate = formData.dateEnd.format('yyyy-MM-DD');
+      console.log(startDate)
       return this.http.get<any>(this.apiUrl+'/weather/'+formData.codigo,{
         params: {
           dateStart: startDate,

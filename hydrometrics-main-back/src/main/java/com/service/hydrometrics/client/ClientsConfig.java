@@ -14,7 +14,6 @@ public class ClientsConfig {
 
     @Bean
     public WebClient.Builder webClientBuilder() {
-        System.out.println("baseURL -> " + baseUrl);
         return WebClient.builder().baseUrl(baseUrl);
     }
 }

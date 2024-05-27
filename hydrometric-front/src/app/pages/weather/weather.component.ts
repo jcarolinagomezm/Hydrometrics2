@@ -21,6 +21,10 @@ export class WeatherComponent implements OnInit{
     public show: boolean = false;
     public nameStation: string;
     public color = ['rgb(138, 233, 142)','rgb(75, 192, 192)','rgb(154, 241, 249)','rgb(255, 171, 106)','rgb(255, 165, 165)','rgb(204, 154, 93)']
+    public minDateStart: Date;
+    public maxDateStart: Date;
+    public minDateEnd: Date;
+    public maxDateEnd: Date;
 
     constructor(
         private weatherService: WeatherDataService,
@@ -31,10 +35,20 @@ export class WeatherComponent implements OnInit{
             dateStart: new FormControl (null, Validators.required),
             dateEnd: new FormControl (null, Validators.required)
         })
+        const currentYear = new Date();
+        this.minDateStart = new Date(currentYear.getFullYear() - 1, currentYear.getMonth() , currentYear.getDate())
+        this.maxDateStart = new Date(currentYear.getFullYear(), currentYear.getMonth(), currentYear.getDate())        
     }
 
     ngOnInit(): void {
         this.loadDataStation();
+    }
+
+    ajustarRango(event){
+        this.stationForm.controls['dateEnd'].reset();
+        const currentYear= new Date(event.target.value.format('yyyy-MM-DD'))
+        this.minDateEnd = new Date(currentYear.getFullYear(), currentYear.getMonth() , currentYear.getDate() + 1)
+        this.maxDateEnd = new Date(currentYear.getFullYear(), currentYear.getMonth() + 1, currentYear.getDate())   
     }
 
     async loadDataStation(){
@@ -51,61 +65,65 @@ export class WeatherComponent implements OnInit{
     }
 
     async loadDataWeather(){
-        this.alert.loading(true);
-        await this.weatherService.loadDataWeather(this.stationForm.value).subscribe({
-            next: (response) => {
-                if(!response){
-                    this.alert.loading(false);
-                    return false;
-                }
-                this.show = true;
-                this.nameStation = this.dataStation[this.stationForm.get('codigo').value-1].name;
-
-                for(let i = 0; i <= response.length-1; i ++){
-                    let info = []
-                    for(let a = 0; a <= response[i].data.length-1; a++){
-                        info.push({x: response[i].data[a].dateTime, y: response[i].data[a].value})
+        if(this.stationForm.valid){
+            this.alert.loading(true);
+            await this.weatherService.loadDataWeather(this.stationForm.value).subscribe({
+                next: (response) => {
+                    if(!response){
+                        this.alert.loading(false);
+                        return false;
                     }
-
-                    if(this.chart[i]){
-                        this.chart[i].destroy();
-                    }
-                    var canvas = document.getElementById("myChart"+i) as HTMLCanvasElement;
-                    var ctx = canvas.getContext("2d");
-
-                    const chartConfig: ChartConfiguration = {
-                        type: 'line',
-                        data: {
-                            datasets: [{
-                                label: response[i].dataCamp,
-                                data: info,
-                                borderColor: this.color[i],
-                                tension: 0.1,
-                            }]
-                        },
-                        options: {
-                          responsive: true,
-                          scales: {
-                            x:{
-                                // reverse: true,
-                                ticks: {
-                                    // sampleSize: 2,
-                                    // align: 'start',
-                                    // maxTicksLimit:3
-                                    // padding: 100
-                                    display: false
-                                },
-                            }
-                          }
+                    this.show = true;
+                    this.nameStation = this.dataStation[this.stationForm.get('codigo').value-1].name;
+    
+                    for(let i = 0; i <= response.length-1; i ++){
+                        let info = []
+                        for(let a = 0; a <= response[i].data.length-1; a++){
+                            info.push({x: response[i].data[a].dateTime, y: response[i].data[a].value})
                         }
+    
+                        if(this.chart[i]){
+                            this.chart[i].destroy();
+                        }
+                        var canvas = document.getElementById("myChart"+i) as HTMLCanvasElement;
+                        var ctx = canvas.getContext("2d");
+    
+                        const chartConfig: ChartConfiguration = {
+                            type: 'line',
+                            data: {
+                                datasets: [{
+                                    label: response[i].dataCamp,
+                                    data: info,
+                                    borderColor: this.color[i],
+                                    tension: 0.1,
+                                }]
+                            },
+                            options: {
+                              responsive: true,
+                              scales: {
+                                x:{
+                                    // reverse: true,
+                                    ticks: {
+                                        // sampleSize: 2,
+                                        // align: 'start',
+                                        // maxTicksLimit:3
+                                        // padding: 100
+                                        display: false
+                                    },
+                                }
+                              }
+                            }
+                        }
+                        this.chart[i] =  new Chart(ctx,chartConfig);
                     }
-                    this.chart[i] =  new Chart(ctx,chartConfig);
+                    this.alert.loading(false);
+                },
+                error: (error) =>{
+                    this.alert.Alert('Intente Nuevamente')
                 }
-                this.alert.loading(false);
-            },
-            error: (error) =>{
-                this.alert.Alert('Intente Nuevamente')
-            }
-        })
+            })
+        }else{
+            this.alert.Alert('Diligencie correctamente el formulario')
+        }
     }
  }

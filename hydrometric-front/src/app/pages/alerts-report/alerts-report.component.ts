@@ -9,15 +9,21 @@ import { dataReportInterface } from '@/models/report.interface';
 import { WeatherService } from '@services/weather.service';
 import html2canvas from 'html2canvas';
 
+
 @Component({
     selector: 'app-reportes',
     templateUrl: './alerts-report.component.html',
     styleUrls: ['.//alerts-report.component.scss'],
 })
 export class AlertsReportComponent implements OnInit{
+    p: number = 1;
     public dataForm: FormGroup;
     public dataStation: StationInterface[];
     public data: dataReportInterface[];
+    public minDateStart: Date;
+    public maxDateStart: Date;
+    public minDateEnd: Date;
+    public maxDateEnd: Date;
 
     constructor(
         private alert: AlertService,
@@ -31,11 +37,20 @@ export class AlertsReportComponent implements OnInit{
             startDate: new FormControl(null, Validators.required),
             endDate: new FormControl(null, Validators.required),
         })
-
+        const currentYear = new Date();
+        this.minDateStart = new Date(currentYear.getFullYear() - 1, currentYear.getMonth() , currentYear.getDate())
+        this.maxDateStart = new Date(currentYear.getFullYear(), currentYear.getMonth(), currentYear.getDate())        
     }
 
     ngOnInit(): void {
         this.loadDataStation();
+    }
+
+    ajustarRango(event){
+        this.dataForm.controls['endDate'].reset();
+        const currentYear= new Date(event.target.value.format('yyyy-MM-DD'))
+        this.minDateEnd = new Date(currentYear.getFullYear(), currentYear.getMonth() , currentYear.getDate() + 1)
+        this.maxDateEnd = new Date(currentYear.getFullYear(), currentYear.getMonth() + 1, currentYear.getDate())   
     }
 
     async loadDataStation(){

@@ -70,10 +70,10 @@ export class ModalComponent implements OnInit {
         await this.weatherService.loadPredict(this.predictForm.value).subscribe({
             next: (response) => {
                 if (response.success) {
-                    this.weatherForm.get('prediction').setValue(response.data.prediction.prediction)
+                    this.weatherForm.get('prediction').setValue(response.data.prediction)
                     this.weatherForm.controls['prediction'].addValidators([Validators.min(traduction[this.data.dataCamp].low), Validators.max(traduction[this.data.dataCamp].up)])
                     this.weatherForm.updateValueAndValidity()
-                    this.prediction = response.data.prediction.prediction
+                    this.prediction = response.data.prediction
                     this.chargeCorrelation()
                 } else {
                     let station = Math.floor(Math.random() * (23 - 1 + 1) + 1)

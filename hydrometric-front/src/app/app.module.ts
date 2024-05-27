@@ -42,6 +42,8 @@ import { AlertsReportComponent } from '@pages/alerts-report/alerts-report.compon
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter'
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 registerLocaleData(localeEn, 'es-ES');
 
@@ -84,6 +86,8 @@ export const DATE_FORMATS = {
     imports: [
         ProfabricComponentsModule,
         MatDatepickerModule,
+        MatFormFieldModule,
+        MatInputModule,
         CommonModule,
         BrowserModule,
         StoreModule.forRoot({ auth: authReducer, ui: uiReducer }),

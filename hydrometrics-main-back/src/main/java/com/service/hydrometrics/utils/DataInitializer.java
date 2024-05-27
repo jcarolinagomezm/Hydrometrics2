@@ -103,6 +103,8 @@ public class DataInitializer {
         if (randomEnable) {
             json = "JSON/weather_data_random.json";
         }
+
+
         if (initDataEnabled) {
             System.out.println("Initializing data of WeatherData...");
             ObjectMapper objectMapper = new ObjectMapper();
