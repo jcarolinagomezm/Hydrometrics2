@@ -22,5 +22,5 @@ public class CreateUserDTO implements Serializable {
     private final String email;
     @NotEmpty
     private final String role;
-    private final byte enabled;
+    private final int enabled;
 }

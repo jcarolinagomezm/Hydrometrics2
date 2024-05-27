@@ -39,7 +39,7 @@ public class AlertService implements IAlertService {
     @Transactional(readOnly = true)
     public List<AlertResponseDTO> getAlertsToReview() {
         List<AlertResponseDTO> responseDTOS = new ArrayList<>();
-        List<Alert> alerts = repo.findAllByStatusIs(Status.UNCHECKED);
+        List<Alert> alerts = repo.findTop100ByStatusIs(Status.UNCHECKED);
         for (Alert alert : alerts) {
             Optional<WeatherData> oWeatherData = weatherService.getWeatherData(alert.getWeatherData().getId());
             if (oWeatherData.isPresent()) {
@@ -80,7 +80,13 @@ public class AlertService implements IAlertService {
         String predictionVariable = DataCamp.valueOf(correlationRequest.getDataCamp().toUpperCase()).getEnglish();
         Double predictionValue = correlationRequest.getPredictionValue();
         List<CorrelationResponseDTO> correlationResponseDTOS = new ArrayList<>();
-        Map<String, List<String>> mapCorrelation = Map.of(DataCamp.HUMEDAD_RELATIVA.getEnglish(), List.of("temperature", "precipitation"), DataCamp.TEMPERATURA.getEnglish(), List.of("relative_humidity", "solar_radiation"), DataCamp.PRECIPITACION.getEnglish(), List.of("relative_humidity"), DataCamp.RADIACION_SOLAR.getEnglish(), List.of("temperature"));
+        Map<String, List<String>> mapCorrelation = Map.of(
+                DataCamp.HUMEDAD_RELATIVA.getEnglish(),
+                List.of("temperature", "precipitation"),
+                DataCamp.TEMPERATURA.getEnglish(),
+                List.of("relative_humidity", "solar_radiation"),
+                DataCamp.PRECIPITACION.getEnglish(), List.of("relative_humidity"),
+                DataCamp.RADIACION_SOLAR.getEnglish(), List.of("temperature"));
         List<String> correlatedVariables = mapCorrelation.get(predictionVariable);
         if (correlatedVariables != null && !correlatedVariables.isEmpty()) {
             correlatedVariables.forEach(v -> {

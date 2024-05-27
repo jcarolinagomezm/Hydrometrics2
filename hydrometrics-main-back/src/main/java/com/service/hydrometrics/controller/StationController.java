@@ -18,7 +18,7 @@ public class StationController {
 
     private final StationRepository repo;
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_AUDITOR')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_AUDITOR','ROLE_USER')")
     @GetMapping("/")
     public ResponseEntity<List<Station>> getStations() {
         return ResponseEntity.ok(repo.findAll());

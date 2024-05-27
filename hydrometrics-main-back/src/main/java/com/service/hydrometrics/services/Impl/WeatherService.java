@@ -68,7 +68,7 @@ public class WeatherService implements IWeatherService {
     public List<WeatherDataReportDTO> getWeatherDataReport(String startDate, String endDate, long stationId) {
         long startTime = Timestamp.valueOf(startDate).getTime();
         long endTime = Timestamp.valueOf(endDate).getTime();
-        String queryStr = "SELECT CASE WHEN wda.revtype = 0 THEN 'CREATE' WHEN wda.revtype = 1 THEN 'UPDATE' END AS type, precipitation, relative_humidity, solar_radiation, temperature, wind_direction, wind_speed, date_time, s.name  AS station_name, ar.timestamp, u.username FROM weather_data_aud wda INNER JOIN station s ON wda.station_id = s.id INNER JOIN audit_revision ar ON wda.rev = ar.id INNER JOIN hydrometrics.user u ON ar.user_id = u.id WHERE station_id = :stationId AND ar.timestamp BETWEEN :startDate AND :endDate";
+        String queryStr = "SELECT precipitation, relative_humidity, solar_radiation, temperature, wind_direction, wind_speed, date_time, s.name  AS station_name, ar.timestamp, u.username FROM weather_data_aud wda INNER JOIN station s ON wda.station_id = s.id INNER JOIN audit_revision ar ON wda.rev = ar.id INNER JOIN hydrometrics.user u ON ar.user_id = u.id WHERE station_id = :stationId AND ar.timestamp BETWEEN :startDate AND :endDate and wda.revtype = 1";
         Query query = entityManager.createNativeQuery(queryStr);
         query.setParameter("stationId", stationId);
         query.setParameter("startDate", startTime);
@@ -77,18 +77,17 @@ public class WeatherService implements IWeatherService {
 
         List<WeatherDataReportDTO> dtoList = new ArrayList<>();
         for (Object[] result : results) {
-            String type = (String) result[0];
-            Double precipitation = (Double) result[1];
-            Double relativeHumidity = (Double) result[2];
-            Double solarRadiation = (Double) result[3];
-            Double temperature = (Double) result[4];
-            Double windDirection = (Double) result[5];
-            Double windSpeed = (Double) result[6];
-            Timestamp dateTime = (Timestamp) result[7];
-            String stationName = (String) result[8];
-            Long dateAction = (Long) result[9];
-            String modificationByUser = (String) result[10];
-            WeatherDataReportDTO dto = new WeatherDataReportDTO(type, precipitation, relativeHumidity, solarRadiation, temperature, windDirection, windSpeed, dateTime, stationName, dateAction, modificationByUser);
+            Double precipitation = (Double) result[0];
+            Double relativeHumidity = (Double) result[1];
+            Double solarRadiation = (Double) result[2];
+            Double temperature = (Double) result[3];
+            Double windDirection = (Double) result[4];
+            Double windSpeed = (Double) result[5];
+            Timestamp dateTime = (Timestamp) result[6];
+            String stationName = (String) result[7];
+            Long dateAction = (Long) result[8];
+            String modificationByUser = (String) result[9];
+            WeatherDataReportDTO dto = new WeatherDataReportDTO(precipitation, relativeHumidity, solarRadiation, temperature, windDirection, windSpeed, dateTime, stationName, dateAction, modificationByUser);
             dtoList.add(dto);
         }
         return dtoList;

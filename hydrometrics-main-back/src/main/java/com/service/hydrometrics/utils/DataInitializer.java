@@ -104,17 +104,16 @@ public class DataInitializer {
             json = "JSON/weather_data_random.json";
         }
 
-
+        boolean conectado = false;
+        while (!conectado) {
+            conectado = validateConnection();
+        }
         if (initDataEnabled) {
             System.out.println("Initializing data of WeatherData...");
             ObjectMapper objectMapper = new ObjectMapper();
             try (InputStream inputStream = new ClassPathResource(json).getInputStream()) {
                 List<WeatherDataMapper> weatherDataMappers = objectMapper.readValue(inputStream, new TypeReference<List<WeatherDataMapper>>() {
                 });
-                boolean conectado = false;
-                while (!conectado) {
-                    conectado = validateConnection();
-                }
                 dataProcessor.sendWeatherDataMappers(weatherDataMappers, "application");
                 System.out.println("End data Initialization of WeatherData...");
             } catch (Exception e) {
