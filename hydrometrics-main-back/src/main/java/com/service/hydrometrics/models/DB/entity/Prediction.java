@@ -13,7 +13,7 @@ public class Prediction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Double value;
+    private Integer value;
     @Enumerated(EnumType.STRING)
     private DataCamp dataCamp;
     @ManyToOne
@@ -21,7 +21,7 @@ public class Prediction {
     @OneToOne(fetch = FetchType.LAZY)
     private Alert alert;
 
-    public Prediction(Double value, DataCamp dataCamp, WeatherData weatherDataId, Alert alert) {
+    public Prediction(Integer value, DataCamp dataCamp, WeatherData weatherDataId, Alert alert) {
         this.value = value;
         this.dataCamp = dataCamp;
         WeatherData = weatherDataId;

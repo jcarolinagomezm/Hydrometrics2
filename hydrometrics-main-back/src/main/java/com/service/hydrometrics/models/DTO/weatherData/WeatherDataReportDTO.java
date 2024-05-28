@@ -12,24 +12,24 @@ import java.sql.Timestamp;
  */
 @Getter
 public class WeatherDataReportDTO implements Serializable {
-    private final Double precipitation;
-    private final Double relative_humidity;
-    private final Double solar_radiation;
-    private final Double temperature;
-    private final Double wind_direction;
-    private final Double wind_speed;
+    private final Integer precipitation;
+    private final Integer relative_humidity;
+    private final Integer solar_radiation;
+    private final Integer temperature;
+    private final Integer wind_direction;
+    private final Integer wind_speed;
     private final String date_time;
     private final String station_name;
     private final String action_date_time;
     private final String modification_by_user;
 
     public WeatherDataReportDTO(Double precipitation, Double relativeHumidity, Double solarRadiation, Double temperature, Double windDirection, Double windSpeed, Timestamp dateTime, String stationName, Long actionDateTime, String modificationByUser) {
-        this.precipitation = precipitation;
-        this.relative_humidity = relativeHumidity;
-        this.solar_radiation = solarRadiation;
-        this.temperature = temperature;
-        this.wind_direction = windDirection;
-        this.wind_speed = windSpeed;
+        this.precipitation = (precipitation != null) ? precipitation.intValue() : null;
+        this.relative_humidity = (relativeHumidity != null) ? relativeHumidity.intValue() : null;
+        this.solar_radiation = (solarRadiation != null) ? solarRadiation.intValue() : null;
+        this.temperature = (temperature != null) ? temperature.intValue() : null;
+        this.wind_direction = (windDirection != null) ? windDirection.intValue() : null;
+        this.wind_speed = (windSpeed != null) ? windSpeed.intValue() : 0;
         this.date_time = String.valueOf(dateTime);
         this.station_name = stationName;
         this.action_date_time = UtilsMethods.longTimeStampToFormatString(String.valueOf(actionDateTime));

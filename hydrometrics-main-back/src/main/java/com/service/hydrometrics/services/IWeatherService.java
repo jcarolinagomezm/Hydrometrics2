@@ -1,5 +1,6 @@
 package com.service.hydrometrics.services;
 
+import com.service.hydrometrics.models.enums.DataCamp;
 import com.service.hydrometrics.utils.WeatherDataMapper;
 import com.service.hydrometrics.models.DB.entity.WeatherData;
 import com.service.hydrometrics.models.DTO.weatherData.WeatherDataReportDTO;
@@ -11,7 +12,7 @@ public interface IWeatherService {
     void update(WeatherData weatherData);
     Optional<WeatherData> getWeatherData(long id);
     Optional<List<WeatherData>> getInfoStation(long stationId, String dateStart, String dateEnd);
-    Double averageVariableRange(String predictionVariable,String correlationVariable, Double prediction);
+    Integer averageVariableRange(DataCamp predictionVariable, DataCamp correlationVariable, Integer prediction);
     List<WeatherDataReportDTO> getWeatherDataReport(String startDate, String endDate, long stationId);
     void saveJsonWeatherDatas(List<WeatherDataMapper> weatherDataMappers);
 }

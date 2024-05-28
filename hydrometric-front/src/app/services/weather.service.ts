@@ -51,8 +51,8 @@ export class WeatherService {
 
   loadReport(formData): Observable<any>{
     try{
-      let startDate = formData.startDate.format('yyyy-MM-DD HH:mm:ss')
-      let endDate = formData.endDate.format('yyyy-MM-DD HH:mm:ss')
+      let startDate = formData.startDate.format('yyyy-MM-DD 00:00:00')
+      let endDate = formData.endDate.format('yyyy-MM-DD 24:00:00')
       return this.http.get<dataReportInterface[]>(environment.apiUrl+'/weather/report',{
         params:{
           stationId: formData.stationId,

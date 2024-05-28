@@ -73,7 +73,6 @@ export class AlertsReportComponent implements OnInit{
                 next: (response) =>{
                     this.data = response;
                     this.generarPDF()
-                    this.alert.loading(false);
                 },
                 error: (error) =>{
                     this.alert.Alert('')
@@ -108,6 +107,7 @@ export class AlertsReportComponent implements OnInit{
                     return doc;
                 }).then((docResult) => {
                     docResult.save('Reporte Alertas Auditadas');
+                    this.alert.loading(false);
                 });
                
                 resolve();

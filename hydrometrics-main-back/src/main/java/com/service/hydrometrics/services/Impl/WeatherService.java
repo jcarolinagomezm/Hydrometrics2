@@ -4,6 +4,7 @@ import com.service.hydrometrics.client.DataProcessor;
 import com.service.hydrometrics.models.DB.entity.WeatherData;
 import com.service.hydrometrics.models.DTO.weatherData.WeatherDataReportDTO;
 import com.service.hydrometrics.models.enums.ActionLog;
+import com.service.hydrometrics.models.enums.DataCamp;
 import com.service.hydrometrics.repository.WeatherDataRepository;
 import com.service.hydrometrics.services.IWeatherService;
 import com.service.hydrometrics.utils.UtilsMethods;
@@ -55,13 +56,13 @@ public class WeatherService implements IWeatherService {
     }
 
     @Override
-    public Double averageVariableRange(String predictionVariable, String correlationVariable, Double predictionValue) {
-        double upRange = predictionValue + ((predictionValue * 0.3) / 100);
-        double downRange = predictionValue - ((predictionValue * 0.3) / 100);
-        String queryStr = " SELECT AVG(w." + correlationVariable + ") AS average FROM weather_data w " + " LEFT JOIN alert a ON a.weather_data_id = w.id " + " WHERE w." + predictionVariable + " BETWEEN " + downRange + " AND " + upRange + " AND a.weather_data_id IS NULL";
+    public Integer averageVariableRange(DataCamp predictionVariable, DataCamp correlationVariable, Integer predictionValue) {
+        double upRange = predictionValue + ((predictionValue * 0.5) / 100);
+        double downRange = predictionValue - ((predictionValue * 0.5) / 100);
+        String queryStr = " SELECT AVG(w." + correlationVariable.getEnglish() + ") AS average FROM weather_data w LEFT JOIN alert a ON a.weather_data_id = w.id  WHERE w." + predictionVariable.getEnglish() + " BETWEEN " + downRange + " AND " + upRange + " AND a.weather_data_id IS NULL AND w." + correlationVariable.getEnglish() + " IS NOT NULL";
         Query query = entityManager.createNativeQuery(queryStr);
         Object result = query.getSingleResult();
-        return result != null ? ((Number) result).doubleValue() : 0.0;
+        return result != null ? ((Number) result).intValue() : 0;
     }
 
     @Override

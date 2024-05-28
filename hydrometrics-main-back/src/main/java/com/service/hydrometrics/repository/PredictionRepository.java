@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface PredictionRepository extends JpaRepository<Prediction, Long> {
 
     @Query("select p from Prediction p where p.alert.id = :alertId")
-    Double getValueByAlertId(@Param("alertId") long alertId);
+    Integer getValueByAlertId(@Param("alertId") long alertId);
 }

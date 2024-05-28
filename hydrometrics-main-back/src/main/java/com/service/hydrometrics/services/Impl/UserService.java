@@ -11,12 +11,16 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -26,6 +30,11 @@ public class UserService implements IUserService {
     private final UserRepository repo;
     private final PasswordEncoder passwordEncoder;
     private final EntityManager entityManager;
+    private final JavaMailSender mailSender;
+
+    @Value("${project.host.front}")
+    private String frontHost;
+
 
 
     @Transactional
@@ -46,6 +55,12 @@ public class UserService implements IUserService {
         var userSaved = repo.save(user);
         UtilsMethods.generatePersistentLogger("User", ActionLog.UPDATE);
         return new UserDTO(userSaved);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<User> userByEmail(String email) {
+        return repo.findByEmail(email);
     }
 
     @Transactional(readOnly = true)
@@ -93,5 +108,13 @@ public class UserService implements IUserService {
         return dtoList;
     }
 
-
+    @Override
+    public void sendPasswordResetEmail(String email, String token) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("Solicitud cambio de contraseña");
+        message.setText("Para cambiar tu contraseña da click en el siguiente link:\n" +
+                "http://"+ frontHost +"/change-password?token=" + token);
+        mailSender.send(message);
+    }
 }

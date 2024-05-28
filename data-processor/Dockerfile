@@ -16,11 +16,11 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Establecer variables de entorno necesarias
-ENV DB_HOST=
+ENV DB_HOST=mysql
 ENV DB_PORT=3306
 ENV DB_NAME=hydrometrics
 ENV DB_USER=root
-ENV DB_PASSWORD=
+ENV DB_PASSWORD=root
 ENV PORT=8081
 
 

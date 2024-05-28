@@ -13,12 +13,12 @@ import java.text.SimpleDateFormat;
 public class WeatherDataDTO implements Serializable {
 
     private final String dateTime;
-    private final Double windSpeed;
-    private final Double windDirection;
-    private final Double precipitation;
-    private final Double temperature;
-    private final Double solarRadiation;
-    private final Double relativeHumidity;
+    private final Integer windSpeed;
+    private final Integer windDirection;
+    private final Integer precipitation;
+    private final Integer temperature;
+    private final Integer solarRadiation;
+    private final Integer relativeHumidity;
     private final StationDTO station;
 
     public WeatherDataDTO(WeatherData weatherData) {

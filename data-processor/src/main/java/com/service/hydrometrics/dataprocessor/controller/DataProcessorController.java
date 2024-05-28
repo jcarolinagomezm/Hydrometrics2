@@ -5,10 +5,14 @@ import com.service.hydrometrics.dataprocessor.service.DataProcess;
 import com.service.hydrometrics.dataprocessor.service.Persisten;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class DataProcessorController {
@@ -24,6 +28,7 @@ public class DataProcessorController {
         var weatherDatas = dataProcess.WeatherDataMapperToEntity(weatherDataMappers);
         var alerts = persisten.batchSaveWeatherData(weatherDatas, username);
         persisten.batchSaveAlerts(alerts, username);
+        log.info("Guardado de datos completado");
         return "Procesado de datos realizado";
     }
 

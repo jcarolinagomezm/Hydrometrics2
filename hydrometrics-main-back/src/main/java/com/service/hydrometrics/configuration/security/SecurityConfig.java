@@ -44,6 +44,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.cors(cors -> cors.configurationSource(this::getCorsConfiguration)).csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(requesMatch -> {
             requesMatch.requestMatchers("/api/v1/login").permitAll();
+            requesMatch.requestMatchers("/api/v1/password-reset").permitAll();
             requesMatch.requestMatchers("/api/v1/**").authenticated();
 //            requesMatch.requestMatchers("/**").permitAll();
 //            requesMatch.requestMatchers("/api/v1/register").permitAll();

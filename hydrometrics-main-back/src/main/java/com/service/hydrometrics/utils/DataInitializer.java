@@ -50,7 +50,7 @@ public class DataInitializer {
         if (userService.getUser(admin.getUsername()) == null) {
             userService.saveUser(admin);
         }
-        User auditor = new User("auditor", "auditor", "auditor", "auditor", "auditor@hydrometrics.com", Role.AUDITOR, true);
+        User auditor = new User("auditor", "auditor", "auditor", "auditor", "ivanchoh99@gmail.com", Role.AUDITOR, true);
         if (userService.getUser(auditor.getUsername()) == null) {
             userService.saveUser(auditor);
         }
@@ -99,7 +99,7 @@ public class DataInitializer {
         if (initStationsEnabled) {
             initStations();
         }
-        String json = "JSON/datos_unificados_short.json";
+        String json = "JSON/datos_unificados_of_csv.json";
         if (randomEnable) {
             json = "JSON/weather_data_random.json";
         }

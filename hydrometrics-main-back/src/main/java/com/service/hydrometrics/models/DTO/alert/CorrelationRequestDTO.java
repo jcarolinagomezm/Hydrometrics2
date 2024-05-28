@@ -11,7 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class CorrelationRequestDTO implements Serializable {
     @NotNull
-    private final Double predictionValue;
+    private final Integer predictionValue;
     @NotNull
     private final long stationId;
     @NotEmpty

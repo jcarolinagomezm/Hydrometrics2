@@ -77,21 +77,23 @@ public class AlertService implements IAlertService {
 
     @Override
     public List<CorrelationResponseDTO> getCorrelationAlert(CorrelationRequestDTO correlationRequest) {
-        String predictionVariable = DataCamp.valueOf(correlationRequest.getDataCamp().toUpperCase()).getEnglish();
-        Double predictionValue = correlationRequest.getPredictionValue();
+        DataCamp predictionVariable = DataCamp.valueOf(correlationRequest.getDataCamp().toUpperCase());
+        Integer predictionValue = correlationRequest.getPredictionValue();
         List<CorrelationResponseDTO> correlationResponseDTOS = new ArrayList<>();
-        Map<String, List<String>> mapCorrelation = Map.of(
-                DataCamp.HUMEDAD_RELATIVA.getEnglish(),
-                List.of("temperature", "precipitation"),
-                DataCamp.TEMPERATURA.getEnglish(),
-                List.of("relative_humidity", "solar_radiation"),
-                DataCamp.PRECIPITACION.getEnglish(), List.of("relative_humidity"),
-                DataCamp.RADIACION_SOLAR.getEnglish(), List.of("temperature"));
-        List<String> correlatedVariables = mapCorrelation.get(predictionVariable);
+        Map<DataCamp, List<DataCamp>> mapCorrelation = Map.of(
+                DataCamp.HUMEDAD_RELATIVA,
+                List.of(DataCamp.TEMPERATURA, DataCamp.PRECIPITACION),
+                DataCamp.TEMPERATURA,
+                List.of(DataCamp.HUMEDAD_RELATIVA, DataCamp.RADIACION_SOLAR),
+                DataCamp.PRECIPITACION,
+                List.of(DataCamp.HUMEDAD_RELATIVA),
+                DataCamp.RADIACION_SOLAR,
+                List.of(DataCamp.TEMPERATURA));
+        List<DataCamp> correlatedVariables = mapCorrelation.get(predictionVariable);
         if (correlatedVariables != null && !correlatedVariables.isEmpty()) {
             correlatedVariables.forEach(v -> {
-                Double promedioVariable = weatherService.averageVariableRange(predictionVariable, v, predictionValue);
-                CorrelationResponseDTO response = new CorrelationResponseDTO(v, promedioVariable);
+                Integer promedioVariable = weatherService.averageVariableRange(predictionVariable, v, predictionValue);
+                CorrelationResponseDTO response = new CorrelationResponseDTO(v.toString().toLowerCase(), promedioVariable);
                 correlationResponseDTOS.add(response);
             });
         }

@@ -9,5 +9,5 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class CorrelationResponseDTO implements Serializable {
     private final String weatherDataVariable;
-    private final Double promedioVariable;
+    private final Integer promedioVariable;
 }

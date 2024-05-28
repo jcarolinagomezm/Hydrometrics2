@@ -103,16 +103,13 @@
             Fecha de Auditoria
           </th>
           <th>
-            Fecha de Modificación
-          </th>
-          <th>
             Usuario
           </th>
         </thead>
         <tbody>
-          <tr *ngFor="let dat of data">
+          <tr *ngFor="let dat of data | paginate: { itemsPerPage: 10, currentPage: p }">
             <td>
-              {{dat.station_name}} °
+              {{dat.station_name}}
             </td>
             <td>
               {{dat.date_time}}
@@ -136,10 +133,7 @@
               {{dat.wind_speed}} m/s
             </td>
             <td>
-              {{dat.creation_date}}
-            </td>
-            <td>
-              {{dat.modification_date}}
+              {{dat.action_date_time}}
             </td>
             <td>
               {{dat.modification_by_user}}
@@ -149,7 +143,7 @@
       </table>
     </div>
     <div class="col-12">
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        <pagination-controls (pageChange)="p = $event" id="paginate"></pagination-controls>
     </div>
   </div>
 </section>

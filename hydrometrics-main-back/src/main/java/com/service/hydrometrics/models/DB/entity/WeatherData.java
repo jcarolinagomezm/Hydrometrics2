@@ -21,17 +21,17 @@ public class WeatherData {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Timestamp dateTime;
-    private Double windSpeed;
-    private Double windDirection;
-    private Double precipitation;
-    private Double temperature;
-    private Double solarRadiation;
-    private Double relativeHumidity;
+    private Integer windSpeed;
+    private Integer windDirection;
+    private Integer precipitation;
+    private Integer temperature;
+    private Integer solarRadiation;
+    private Integer relativeHumidity;
     @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     @ManyToOne(fetch = FetchType.LAZY)
     private Station station;
 
-    public Double getValueVariable(DataCamp dataCamp) {
+    public Integer getValueVariable(DataCamp dataCamp) {
         switch (dataCamp) {
             case PRECIPITACION -> {
                 return this.getPrecipitation();
