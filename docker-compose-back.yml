@@ -1,4 +1,4 @@
-version: "1.0"
+version: "3.8"
 services:
   # ? Configuracion main-back
   hydrometrics-back:
@@ -12,6 +12,7 @@ services:
     environment:
       PORT: 8080
       PORT_SMTP: 587
+      HOST_FRONT: http://d2s97k1zclfm03.cloudfront.net
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
       DB_NAME: ${DB_NAME}

@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface IUserService {
 
-    Optional<User> userByEmail (String email);
+    Optional<User> userByEmail(String email);
 
     boolean userExist(User user);
 
@@ -18,6 +18,8 @@ public interface IUserService {
     UserDTO saveUser(User user);
 
     UserDTO updateUser(User user);
+
+    void updatePassword(User user);
 
     User getUser(String username);
 

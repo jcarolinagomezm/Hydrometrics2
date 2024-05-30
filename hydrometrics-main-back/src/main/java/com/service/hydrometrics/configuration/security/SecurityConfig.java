@@ -46,8 +46,6 @@ public class SecurityConfig {
             requesMatch.requestMatchers("/api/v1/login").permitAll();
             requesMatch.requestMatchers("/api/v1/password-reset").permitAll();
             requesMatch.requestMatchers("/api/v1/**").authenticated();
-//            requesMatch.requestMatchers("/**").permitAll();
-//            requesMatch.requestMatchers("/api/v1/register").permitAll();
             requesMatch.requestMatchers("/v3/api-docs/**").permitAll();
             requesMatch.requestMatchers("/swagger-ui/**").permitAll();
             requesMatch.requestMatchers("/swagger-ui.html").permitAll();

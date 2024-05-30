@@ -50,7 +50,6 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-
     @PostMapping("/password-reset")
     public ResponseEntity<?> resetPassword(@RequestParam String email) {
         Optional<User> user = userService.userByEmail(email);
@@ -63,14 +62,15 @@ public class AuthController {
 
     @PostMapping("/new-password")
     public ResponseEntity<?> newPassword(@RequestParam String newPassword, HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
-        if (token == null) return ResponseEntity.badRequest().build();
+        String authorization = request.getHeader("Authorization");
+        if (authorization == null) return ResponseEntity.badRequest().build();
+        String token = authorization.replace("Bearer ", "");
         String username = jwtService.extractUsername(token);
         User user = userService.getUser(username);
         if (!user.isEnabled()) return ResponseEntity.badRequest().build();
-        String newPasswordEncript = passwordEncoder.encode(newPassword);
-        user.setPassword(newPasswordEncript);
-        userService.saveUser(user);
+        String newPasswordEncrypt = passwordEncoder.encode(newPassword);
+        user.setPassword(newPasswordEncrypt);
+        userService.updatePassword(user);
         return ResponseEntity.noContent().build();
     }
 }

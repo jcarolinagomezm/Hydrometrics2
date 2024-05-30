@@ -58,6 +58,13 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public void
+    updatePassword(User user) {
+        repo.save(user);
+        UtilsMethods.generatePersistentLogger("User", ActionLog.UPDATE);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Optional<User> userByEmail(String email) {
         return repo.findByEmail(email);
