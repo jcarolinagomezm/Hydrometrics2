@@ -1,9 +1,9 @@
-version: "1.0"
+version: "3.8"
 services:
 #? Configuracion DB MySQL
   mysql:
     container_name: mysql
-    image: mysql
+    image: mysql:latest
     ports:
       - "3307:3306"
     environment:
@@ -15,6 +15,7 @@ services:
   # ? Configuracion main-back
   hydrometrics-back:
     container_name: hydrometrics-back
+    # image: 39d593ac322e
     build:
      context: ./hydrometrics-main-back/
      dockerfile: ./Dockerfile
@@ -38,6 +39,7 @@ services:
   # ? Configuracion data-process
   dataprocessor:
     container_name: dataprocessor
+    # image: 58feb5ef6a89
     build:
      context: ./data-processor/
      dockerfile: ./Dockerfile
@@ -57,23 +59,19 @@ services:
       - mysql
     restart: always
   # ? Configuracion Front
-  meteodata:
-    container_name: meteodata
-    build:
-     context: ./hydrometric-front/
-     dockerfile: ./Dockerfile
-    ports:
-      - "3000:80"
-    networks:
-      - hydrometrics-net
-    depends_on:
-      - hydrometrics-back
-    restart: always
+#   meteodata:
+#     container_name: meteodata
+#     build:
+#      context: ./hydrometric-front/
+#      dockerfile: ./Dockerfile
+#     ports:
+#       - "80:80"
+#     networks:
+#       - hydrometrics-net
+#     depends_on:
+#       - hydrometrics-back
+#     restart: always
 networks:
   hydrometrics-net:
     name: hydrometrics-net
-
-
-
-
 

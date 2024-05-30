@@ -23,13 +23,13 @@ public class WeatherDataReportDTO implements Serializable {
     private final String action_date_time;
     private final String modification_by_user;
 
-    public WeatherDataReportDTO(Double precipitation, Double relativeHumidity, Double solarRadiation, Double temperature, Double windDirection, Double windSpeed, Timestamp dateTime, String stationName, Long actionDateTime, String modificationByUser) {
+    public WeatherDataReportDTO(Number precipitation, Number relativeHumidity, Number solarRadiation, Number temperature, Number windDirection, Number windSpeed, Timestamp dateTime, String stationName, Long actionDateTime, String modificationByUser) {
         this.precipitation = (precipitation != null) ? precipitation.intValue() : null;
         this.relative_humidity = (relativeHumidity != null) ? relativeHumidity.intValue() : null;
         this.solar_radiation = (solarRadiation != null) ? solarRadiation.intValue() : null;
         this.temperature = (temperature != null) ? temperature.intValue() : null;
         this.wind_direction = (windDirection != null) ? windDirection.intValue() : null;
-        this.wind_speed = (windSpeed != null) ? windSpeed.intValue() : 0;
+        this.wind_speed = (windSpeed != null) ? windSpeed.intValue() : null;
         this.date_time = String.valueOf(dateTime);
         this.station_name = stationName;
         this.action_date_time = UtilsMethods.longTimeStampToFormatString(String.valueOf(actionDateTime));

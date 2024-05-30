@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,7 @@ import java.util.Optional;
 public class AuthController {
 
     private final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
     private final IUserService userService;
     private final AuthenticationManager authenticationManager;
 
@@ -57,5 +59,18 @@ public class AuthController {
         var token = jwtService.generateTokenResetPassword(user.get().getUsername());
         userService.sendPasswordResetEmail(email, token);
         return ResponseEntity.ok("Password reset email sent");
+    }
+
+    @PostMapping("/new-password")
+    public ResponseEntity<?> newPassword(@RequestParam String newPassword, HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        if (token == null) return ResponseEntity.badRequest().build();
+        String username = jwtService.extractUsername(token);
+        User user = userService.getUser(username);
+        if (!user.isEnabled()) return ResponseEntity.badRequest().build();
+        String newPasswordEncript = passwordEncoder.encode(newPassword);
+        user.setPassword(newPasswordEncript);
+        userService.saveUser(user);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -114,7 +114,7 @@ public class UserService implements IUserService {
         message.setTo(email);
         message.setSubject("Solicitud cambio de contraseña");
         message.setText("Para cambiar tu contraseña da click en el siguiente link:\n" +
-                "http://"+ frontHost +"/change-password?token=" + token);
+                "http://"+ frontHost +"/change-password/" + token);
         mailSender.send(message);
     }
 }
