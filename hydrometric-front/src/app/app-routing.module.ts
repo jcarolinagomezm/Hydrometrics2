@@ -13,6 +13,7 @@ import { CargarDatosComponent } from '@pages/cargarDatos/cargarDatos.component';
 import { AlertsReportComponent } from '@pages/alerts-report/alerts-report.component';
 import { DataReportComponent } from '@pages/data-report/data-report.component';
 import { ForgotComponent } from '@modules/login/forgot/forgot.component';
+import { RecoverComponent } from '@modules/login/recover/recover.component';
 
 const routes: Routes = [
     {
@@ -71,6 +72,11 @@ const routes: Routes = [
     {
         path: 'recuperar-contraseña',
         component: ForgotComponent,
+        canActivate: [NonAuthGuard]
+    },
+    {
+        path: 'change-password/:token',
+        component: RecoverComponent,
         canActivate: [NonAuthGuard]
     },
     {path: '**', redirectTo: 'login'}

@@ -1,4 +1,4 @@
-<div class="card card-outline card-primary cards">
+<div class="card card-outline card-primary cards" *ngIf="number == 1">
     <div class="card-header text-center">
         <img src="./assets/img/meteodata.png" height="100px"alt="https://www.flaticon.es/icono-gratis/weather-forecast_9176568" alt="https://www.flaticon.es/icono-gratis/weather-forecast_9176568">
         <br>
@@ -9,7 +9,7 @@
         <p class="mt-2">Ingrese su correo eléctronico registrado para enviar los pasos para recuperar su contraseña.</p>
         <form [formGroup]="forgotForm" (ngSubmit)="forgotPassword()">
             <div class="input-group mb-3">
-                <input formControlName="email" type="email" class="form-control" placeholder="email@gmail.com" />
+                <input formControlName="email" type="email" class="form-control" placeholder="email@gmail.com" required/>
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="fas fa-envelope"></span>
@@ -26,4 +26,18 @@
             </div>
         </form>
     </div>
+</div>
+<div class="card card-outline card-primary cards" *ngIf="number == 2">
+    <div class="card-header text-center">
+        <img src="./assets/img/meteodata.png" height="100px"alt="https://www.flaticon.es/icono-gratis/weather-forecast_9176568" alt="https://www.flaticon.es/icono-gratis/weather-forecast_9176568">
+        <br>
+        <a class="h1"><b>MeteoData</b></a>
+    </div>
+    <div class="card-body">
+        <p class="login-box-msg h3"><b>Recuperar Contraseña</b></p>
+        <p class="mt-2">Se envio un correo eléctronico a su correo registrado en MeteoData</p>
+    </div>
+    <p class="mb-1">
+        <a [routerLink]="['/login']">Iniciar Sesion</a>
+    </p>
 </div>

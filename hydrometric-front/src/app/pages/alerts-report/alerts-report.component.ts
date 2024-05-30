@@ -71,8 +71,12 @@ export class AlertsReportComponent implements OnInit{
             this.alert.loading(true);
             this.weatherService.loadReport(this.dataForm.value).subscribe({
                 next: (response) =>{
-                    this.data = response;
-                    this.generarPDF()
+                    if(response.length != 0){
+                        this.data = response;
+                        this.generarPDF()
+                    }else{
+                        this.alert.Alert('No hay Auditorias Realizadas.')
+                    }
                 },
                 error: (error) =>{
                     this.alert.Alert('')

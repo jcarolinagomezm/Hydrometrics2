@@ -96,7 +96,6 @@ export class ModalComponent implements OnInit {
                         this.alert.Alert('Intente Nuevamente')
                     }
                 });
-                console.log(this.weatherForm.controls['prediction'].value)
                 resolve();
             }, 1000);
         });

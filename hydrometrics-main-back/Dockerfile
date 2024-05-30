@@ -7,7 +7,7 @@ WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 
-# Instalar dependencias y construir el proyecto
+# Instalar dependencias y construir el proyecto     
 RUN mvn clean package -DskipTests
 
 # Etapa de ejecución
@@ -29,9 +29,10 @@ ENV DATA_PROCESSOR_PORT=8081
 # Copiar el jar construido desde la etapa de construcción
 COPY --from=builder /app/target/*.jar app.jar
 
-COPY --from=builder /app/src/main/resources/JSON/datos_unificados_short.json /app/src/main/resources/JSON/datos_unificados_short.json
+# COPY --from=builder /app/src/main/resources/JSON/datos_unificados_short.json /app/src/main/resources/JSON/datos_unificados_short.json
 # Exponer el puerto de la aplicación
 EXPOSE $PORT
+EXPOSE $PORT_SMTP
 
 # Comando de entrada para ejecutar la aplicación
 ENTRYPOINT ["sh", "-c", "java -jar app.jar"]

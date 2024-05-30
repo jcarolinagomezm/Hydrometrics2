@@ -40,14 +40,14 @@
                 <input [matDatepicker]="pickerStart" [min]="minDateStart" [max]="maxDateStart" matInput
                   formControlName="startDate" (dateChange)="ajustarRango($event)">
                 <mat-datepicker-toggle matIconSuffix [for]="pickerStart"></mat-datepicker-toggle>
-                <mat-datepicker #pickerStart disabled="false"></mat-datepicker>
+                <mat-datepicker [touchUi]="true" #pickerStart disabled="false"></mat-datepicker>
               </mat-form-field>
               <mat-form-field class="col-12">
                 <mat-label>Fecha Fin:</mat-label>
-                <input [matDatepicker]="pickerEnd" [min]="minDateEnd" [max]="maxDateEnd" matInput
-                  formControlName="endDate" required>
-                <mat-datepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datepicker-toggle>
-                <mat-datepicker #pickerEnd></mat-datepicker>
+                <input [matDatepicker]="pickerEnd" [min]="minDateEnd" [max]="maxDateEnd" matInput 
+                  formControlName="endDate"  required>
+                <mat-datepicker-toggle matIconSuffix  [for]="pickerEnd" ></mat-datepicker-toggle>
+                <mat-datepicker [touchUi]="true" #pickerEnd></mat-datepicker>
               </mat-form-field>
               <!-- <div class="input-group">
                 <label>Fecha Inicio:</label>
@@ -72,8 +72,8 @@
 
     </div>
 
-    <div class="table-responsive" id="tablaDatos">
-      <table class="table">
+    <div class="table-responsive" >
+      <table class="table" id="tablaDatos">
         <thead>
           <th>
             Estación
@@ -107,7 +107,7 @@
           </th>
         </thead>
         <tbody>
-          <tr *ngFor="let dat of data | paginate: { itemsPerPage: 10, currentPage: p }">
+          <tr *ngFor="let dat of data | paginate: { itemsPerPage: 5, currentPage: p }">
             <td>
               {{dat.station_name}}
             </td>
@@ -142,8 +142,8 @@
         </tbody>
       </table>
     </div>
-    <div class="col-12">
-        <pagination-controls (pageChange)="p = $event" id="paginate"></pagination-controls>
-    </div>
+    <!-- <div class="col-12">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div> -->
   </div>
 </section>

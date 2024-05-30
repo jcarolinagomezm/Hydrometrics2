@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AlertService } from './alert.service';
 import { UserInterface } from '@/models/user.interface';
 import { Observable } from 'rxjs';
@@ -34,6 +34,43 @@ export class AppService {
         }
       })
     } catch (error) {
+      this.toastr.error(error.message);
+    }
+  }
+
+  forgotPassword(email){
+    try{
+      return this.http.post(environment.apiUrl+'/password-reset?email='+email,email)
+
+    }catch(error){
+      this.toastr.error(error.message);
+    }
+  }
+
+  recoverPassword(password, token): Promise<void>{
+    try {
+      const headers = new HttpHeaders({
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      });
+
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          this.http.post(environment.apiUrl + '/new-password?newPassword='+password,password, {headers}).subscribe({
+          next: (response) => {
+            this.router.navigate(['/login']);
+          },
+          error: (error) => {
+            this.alert.Alert('Token invalido o expirado')
+          },
+          complete: () =>{
+            this.alert.Success('Exitoso','Cambio de contraseña exitoso.')
+          }
+        })
+          resolve();
+        }, 500);
+      });
+    }catch(error){
       this.toastr.error(error.message);
     }
   }

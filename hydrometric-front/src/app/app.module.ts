@@ -15,6 +15,7 @@ import { UserAdminComponent } from '@pages/user/userAdmin.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardComponent } from '@pages/dashboard/dashboard.component';
 import { ForgotComponent } from '@modules/login/forgot/forgot.component';
+import { RecoverComponent } from '@modules/login/recover/recover.component';
 import { ToastrModule } from 'ngx-toastr';
 
 import { CommonModule, registerLocaleData } from '@angular/common';
@@ -82,6 +83,7 @@ export const DATE_FORMATS = {
         AlertsReportComponent,
         CargarDatosComponent,
         ForgotComponent,
+        RecoverComponent,
     ],
     imports: [
         ProfabricComponentsModule,

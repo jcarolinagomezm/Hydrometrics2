@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class ForgotComponent implements OnInit{
     public forgotForm: FormGroup;
+    public number: number = 1;
 
     constructor(
         private router: Router,
@@ -21,7 +22,7 @@ export class ForgotComponent implements OnInit{
         private alert: AlertService,
     ) { 
         this.forgotForm = new FormGroup({
-            email: new FormControl(null, Validators.required),
+            email: new FormControl(null, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]) ),
         });
     }
 
@@ -32,7 +33,24 @@ export class ForgotComponent implements OnInit{
         );
     }
   
-    forgotPassword(){
-
+    async forgotPassword(){
+        this.alert.loading(true);
+        if(this.forgotForm.valid){
+            await this.appService.forgotPassword(this.forgotForm.controls['email'].value).subscribe({
+                next: (response) => {
+                    this.number = 2;
+                    this.alert.loading(false);
+                },
+                error: (error) =>{
+                    if(error.status == 404){
+                        this.alert.Alert('El correo eléctronico no esta registrado.')
+                    }else{
+                        this.alert.Alert('Error al enviar el correo eléctronico.')
+                    }
+                }
+            })
+        }else{
+            this.alert.Alert('Correo eléctronico incorrecto.')
+        }
     }
 }

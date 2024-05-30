@@ -49,6 +49,8 @@ export class ReportesComponent implements OnInit {
             scale: 3
         };
         let date = new Date()
+
+
         html2canvas(element, options).then((canvas) => {
             const img = canvas.toDataURL('image/PNG');
             const imgProps = (doc as any).getImageProperties(img);
